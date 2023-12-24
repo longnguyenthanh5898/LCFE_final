@@ -256,22 +256,7 @@
                                   </div>
                                 </div>
                                 <!-- reconfirm password -->
-                                <!-- <div class="form-group">
-                              <label for="repassword"
-                                >Reconfirm your password
-                              </label>
-                              <input
-                                type="password"
-                                class="form-control"
-                                name="repassword"
-                                id="repassword"
-                                placeholder="Password"
-                                required
-                              />
-                              <div class="invalid-feedback">
-                                Reconfirm Password is required.
-                              </div>
-                            </div> -->
+                               
                               </div>
                               <!-- mobile phone -->
                               <div class="form-group">
@@ -487,12 +472,12 @@
         time3: null,
         submitted: false,
         isModalOpen: false,
+        idUser: ''
       };
     },
     methods: {
       async submitEditForm() {
-        alert("SUBMIT");
-        console.log("NEWWWW", this.editUserData);
+       
         const storedResponse = JSON.parse(localStorage.getItem("response"));
         const user = this.editUserData
         const payloadEdit = {
@@ -512,12 +497,18 @@
         } catch (error) {
           console.log(error);
           if (!error.response) {
+            location.reload()
             this.errorMessage =
               "Unexpected error occurred : " +
               ((error && error.errorMessage) || error);
           } else if (error.response.status === 409) {
+            location.reload()
             this.errorMessage = "Username is not valid.";
-          } else {
+          } else if (error.response.status === 403) {
+            location.reload()
+            this.errorMessage = "No permission to edit";
+            } else {
+              location.reload()
             this.errorMessage =
               "Unexpected error occurred : " +
               ((error && error.errorMessage) || error);
@@ -609,6 +600,7 @@
         this.submitted = true;
   
         const storedResponse = JSON.parse(localStorage.getItem("response"));
+       
         const {
           customer_id: customerId,
           name,
@@ -652,27 +644,23 @@
         if (endDate != null) {
           payload.endDate = endDate;
         }
-        // Save the payload to the component data property
         this.searchPayload = payload;
   
-        // Kiểm tra xem payload có trống không
         const isPayloadEmpty = Object.keys(payload).length === 0;
   
         try {
           let response;
   
-          // Nếu payload không trống và có token
           if (!isPayloadEmpty && storedResponse) {
             response = await UserService.searchMember(payload, storedResponse);
             console.log(
-              "🚀 ~ file: Home.vue:384 ~ handleSearch ~ response: TIM KIEM",
+              "🚀 ~ file: Home.vue:384 ~ handleSearch ~ response",
               response
             );
           } else {
-            // Nếu payload trống hoặc không có token, thực hiện tìm kiếm tất cả
             response = await UserService.findAllUsers(storedResponse, 1);
             console.log(
-              "🚀 ~ file: Home.vue:389 ~ handleSearch ~ LAY TAT CA:",
+              "🚀 ~ file: Home.vue:389 ~ handleSearch ~ ",
               response
             );
           }
@@ -772,7 +760,8 @@
       },
       async loadPage(page) {
         const token = JSON.parse(localStorage.getItem("response"));
-  
+        this.idUser = token.split('-')[0]
+        console.log("AAAAAAAAAAAAAAAAAAAAA", this.idUser)
         if (token) {
           try {
             UserService.findAllUsers(token, page).then((response) => {

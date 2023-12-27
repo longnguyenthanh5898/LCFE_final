@@ -11,6 +11,7 @@
       <div v-if="successMessage" class="alert alert-success" role="alert">
         {{ successMessage }}
       </div>
+      <!-- /* Create the common Form/* -->
       <form
         name="form"
         @submit.prevent="handleLogin"
@@ -56,7 +57,7 @@
             {{ passwordErrorMessage }}
           </div>
         </div>
-
+        <!-- /* Create the common button/* -->
         <button
           class="btn btn-primary btn-block"
           @click="submitted = true"
@@ -172,6 +173,7 @@ export default {
       } else if (this.formData.password.length > maxLength) {
         return `Password must be at most ${maxLength} characters long.`;
       } else if (!/^[a-zA-Z0-9!@#\$%\^&*]+$/.test(this.formData.password)) {
+        // /* Create the common file to store message, regex/*
         return "Password can only contain letters, numbers, and special characters !@#\$%\^&*.";
       } else if (
         /(012|123|234|345|456|567|678|789|890)/.test(this.formData.password)

@@ -251,6 +251,7 @@ export default {
           const response = await UserService.checkDuplicate(
             this.formData.customer_id
           );
+          /*remove console.log*/
           console.log(
             "🚀 ~ file: Register.vue:237 ~ handleCheckDuplicate ~ response:",
             response

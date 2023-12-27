@@ -16,6 +16,7 @@
       >
         <div class="row">
           <!-- id -->
+          <!-- /*Break to component common*/ -->
           <div class="form-group col-6 col-md-6 col-sm-12">
             <label for="id">ID</label>
             <input
@@ -69,6 +70,7 @@
           </div>
   
           <!-- name -->
+          <!-- /*Break to component common form field*/ -->
           <div class="form-group col-6 col-md-6 col-sm-12">
             <label for="name">Name</label>
             <input
@@ -116,6 +118,7 @@
       </form>
   
       <!-- table -->
+      <!-- /*Break to component common table*/ -->
       <div class="card">
         <div class="card-header">
           
@@ -159,6 +162,7 @@
                     </button>
   
                     <!-- modal edit -->
+                    <!-- /*Break to component common modal*/ -->
                     <div
                       class="modal fade"
                       id="formEdit"
@@ -394,6 +398,7 @@
       <!-- Modal -->
   
       <!-- pagination -->
+      <!-- /*Break to component common*/ -->
       <nav aria-label="Page navigation ">
         <ul class="pagination d-flex justify-content-center mt-2">
           <li class="page-item" :class="{ disabled: userList.page === 1 }">
@@ -435,6 +440,7 @@
          
         </ul>
       </nav>
+      <!-- /*Break to component common*/ -->
     </div>
   </template>
   
@@ -627,15 +633,20 @@
         if (name != null) {
           payload.name = name;
         }
+
+        /*should use operator !==*/
   
         if (
           phone_number_part1 != null ||
           phone_number_part2 != null ||
           phone_number_part3 != null
         ) {
+          /*Syntax phone_number_part1 ? phone_number_part1 : ''*/
           payload.phoneNumber = `${phone_number_part1 ||
             ""}${phone_number_part2 || ""}${phone_number_part3 || ""}`;
         }
+
+        /*should use operator !==*/
   
         if (startDate != null) {
           payload.startDate = startDate;
@@ -653,6 +664,7 @@
   
           if (!isPayloadEmpty && storedResponse) {
             response = await UserService.searchMember(payload, storedResponse);
+            /*remove console.log*/
             console.log(
               "🚀 ~ file: Home.vue:384 ~ handleSearch ~ response",
               response
@@ -666,7 +678,7 @@
           }
   
           this.userList = response.data;
-  
+          /*remove console.log*/
           console.log("response", response);
         } catch (error) {
           console.log(error);
@@ -694,6 +706,7 @@
             this.searchPayload,
             storedResponse
           );
+          /*remove console.log*/
           console.log("response", response);
           if (response.data) {
             this.handleExcelExport(response.data);

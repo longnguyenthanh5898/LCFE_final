@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_AUTH_URL = "http://localhost:8223/api/auth/";
+/* create file env or config file to store API URL, SECRET,...*/
 
 const API_URL = "http://localhost:8223/api/v1/members";
 
@@ -61,7 +62,7 @@ class UserService {
       },
     });
   }
-
+/* create AXIOS file to config authen  token, header, method, param, refresh token,...*/
   exportExcel(params, token) {
     return axios.get(API_URL + "/export", {
       params: params,
@@ -72,7 +73,7 @@ class UserService {
       responseType: "arraybuffer",
     });
   }
-
+/* create AXIOS file to config authen  token, header, method, param, refresh token,...*/
   editMember(user, token) {
     return axios.put(API_URL + `/${user.id}`, user, {
       headers: {

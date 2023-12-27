@@ -1,4 +1,5 @@
 <!-- eslint-disable prettier/prettier -->
+<!-- /*Shouldn't disable Eslint rule*/ -->
 <template>
     
     <div class="page-wrap d-flex flex-row align-items-center">

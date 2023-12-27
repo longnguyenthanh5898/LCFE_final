@@ -66,7 +66,7 @@
         </button>
       </form>
 
-      <a href="/register" class="card-link">Create New Account!</a>
+      <router-link to="/register" class="card-link">Create New Account!</router-link>
     </div>
   </div>
 </template>
@@ -109,10 +109,15 @@ export default {
       this.loading = true;
       try {
         const response = await UserService.login(this.formData);
-        // Store pure password for further operations.
-        this.saveLoginResponse(response.data);
+        
 
+       
+        this.saveLoginResponse(response.data.data);
+        console.log("@@@@@@@@@@🚀 ~ file: Login.vue:118 ~ handleLogin ~ response.data:", response.data.data)
+        
+        this.updateUser(this.formData.customer_id)
         this.successMessage = "Login successfully !";
+        location.reload()
         setTimeout(() => {
           this.$router.push("/home");
         }, 1000);

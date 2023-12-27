@@ -267,9 +267,9 @@ export default {
         if (!error.response) {
           this.errorMessage = "Duplicate ID Member : ";
         } else if (error.response.status === 409) {
-          this.errorMessage = "Username is not valid.";
+          this.errorMessage = error.response.data.message;
         } else {
-          this.errorMessage = "Duplicate ID Member ";
+          this.errorMessage = error.response.data.message;
         }
         setTimeout(() => {
         this.errorMessage = "";
@@ -343,7 +343,6 @@ export default {
          this.errorRepasswordMessage = this.isRePasswordValid
       ? ""
       : "Passwords do not match.";
-    }
     },
     validateName() {
       // Check if name contains only letters
@@ -367,7 +366,7 @@ export default {
 
       // Check if all parts are valid
       this.isPhoneNumberValid = isPart1Valid && isPart2Valid && isPart3Valid;
-      this.errorPhoneNumberMessage = "Phone number is required and must only contain letters."
+      this.errorPhoneNumberMessage = "Phone number is required and must only contain number."
     },
     async handleRegister() {
       // Clear error message if there was a previous mismatch
@@ -398,7 +397,8 @@ export default {
       this.loading = true;
       try {
         const response = await UserService.register(payload, storedResponse);
-        console.log("response", response);
+        console.log("responseXXX", response);
+        this.successMessage = response.data.message
         this.$router.push("/login");
       } catch (error) {
         console.log(error);
@@ -417,6 +417,8 @@ export default {
         this.loading = false;
       }
     },
+    },
+   
   
 };
 </script>
